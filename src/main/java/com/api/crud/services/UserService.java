@@ -4,6 +4,7 @@ import com.api.crud.models.UserModel;
 import com.api.crud.repositories.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
@@ -22,8 +23,22 @@ public class UserService {
     public Optional<UserModel> getOne(Long id){
         return userRepository.findById(id);
     }
-    /*public Optional<UserModel> updateByID(UserModel request, Long id ){
-    return userRepository.
-    }*/
+    public UserModel updateByID(UserModel request, Long id ){
+    UserModel userModel = userRepository.findById(id).get();
+
+    userModel.setName(request.getName());
+    userModel.setLastName(request.getLastName());
+    userModel.setEmail(request.getEmail());
+
+    return userModel;
+    }
+    public Boolean deleteUser (Long id){
+        try{
+        userRepository.deleteById(id);
+        return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
 
 }

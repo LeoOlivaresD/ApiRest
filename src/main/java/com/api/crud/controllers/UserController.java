@@ -28,4 +28,17 @@ public class UserController {
     public Optional<UserModel> getOneById(@PathVariable Long id){
         return userService.getOne(id);
     }
+    @PutMapping(path = "/{id}")
+    public UserModel updateUserById(@RequestBody UserModel request , Long id){
+    return this.userService.updateByID(request, id);
+    }
+    @DeleteMapping (path = "/{id}")
+    public String deleteById(@PathVariable ("id") Long id){
+        boolean ok = this.userService.deleteUser(id);
+        if (ok){
+            return "User with id " + id + "deleted!";
+        }else {
+            return "Error, we have a problem and can´t delete user with id " + id ;
+        }
+    }
 }
